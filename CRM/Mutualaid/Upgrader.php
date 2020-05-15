@@ -44,6 +44,23 @@ class CRM_Mutualaid_Upgrader extends CRM_Mutualaid_Upgrader_Base
         foreach (CRM_Mutualaid_Settings::getContactCustomFieldResources() as $resource) {
             $customData->syncCustomGroup($resource);
         }
+        
+        civicrm_api3(
+            'Dashboard',
+            'create',
+            [
+                'name'           => 'mutualaid_dashboard',
+                'label'          => E::ts("MutualAid Dashboard"),
+                'url'            => 'civicrm/mutualaid/dashlet',
+                'permission'     => 'access CiviCRM',
+                'fullscreen_url' => 'civicrm/mutualaid/dashlet',
+                'cache_minutes'  => 7200,
+                'is_active'      => 1,
+            ]
+        );
+
+        return true;
+
     }
 
     /**
